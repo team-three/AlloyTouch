@@ -35,6 +35,10 @@
     function bind(element, type, callback) {
         element.addEventListener(type, callback, false);
     }
+    
+    function unbind(element, type, callback) {
+        element.removeEventListener(type, callback);
+    }
 
     function ease(x) {
         return Math.sqrt(1 - Math.pow(x - 1, 2));
@@ -333,6 +337,12 @@
                     this.animationEnd.call(this, value);
                 }.bind(this));
             }
+        },
+        destroy: function () {
+            unbind(this.element, "touchstart", this._startHandler);
+            unbind(window, "touchmove", this._moveHandler);
+            unbind(window, "touchend", this._endHandler);
+            unbind(window, "touchcancel", this._cancel);
         }
     };
 
